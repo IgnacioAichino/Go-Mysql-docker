@@ -66,6 +66,24 @@ func CreateUser(c *gin.Context) {
 
 }
 
+func DeleteUser(c *gin.Context) {
+	var deleteUser model.User
+	if err := c.ShouldBindJSON(&deleteUser); err != nil {
+		println("Error bind REQUEST")
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Usuario FAIL"})
+		return
+	}
+
+	err := data.RemoveUser(deleteUser)
+	if err != nil {
+		print("Error DELETE REQUEST")
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Usuario FAIL EN DELETE"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Usuario correctamente eliminado"})
+}
+
 func ListAll(c *gin.Context) {
 
 	users := data.GetAllUsers()

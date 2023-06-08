@@ -21,10 +21,11 @@ func main() {
 	r := gin.Default()
 	
 	r.POST("/createuser", controller.CreateUser)
-	r.GET("//login", controller.Login)
+	r.GET("/login", controller.Login)
 
 	r.Use(JwtAuthMiddleware())
 	r.GET("/listall", controller.ListAll)
+	r.POST("/deleteuser", controller.DeleteUser)
 
 	r.Run(":8080") //listen and serve on 0.0.0.0:8080
 }

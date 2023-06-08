@@ -88,3 +88,26 @@ func GetUser( user model.User) model.User {
 	return user_result
 }
 
+
+func RemoveUser( deleteuser model.User) error {
+
+	println("USERNAME: ", deleteuser.Username)
+
+	insertQuery := `DELETE FROM usuarios
+					WHERE username = ?;`
+
+	stmt, err := database.Prepare(insertQuery)
+	if err != nil {
+        return err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(deleteuser.Username)
+	if err != nil {
+        fmt.Println("Error al ejecutar la consulta:", err)
+		return err
+	}
+	fmt.Println("Delete exitosa database")
+	return nil
+}
+
